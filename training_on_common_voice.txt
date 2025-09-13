@@ -2,30 +2,44 @@ Last page we have setup the pre-training and fine-tunning based on the farseq wa
 
 If you have already download and install fairseq and sequence, just skip steps 1 to 6
 
-    First download the source code by “git clone https://github.com/kathykyt/cantoneseASR_jyutping.git” , then
-    Setup the environment, “cd cantoneseASR_jyutping”, install python virtual environment, “python3 -m venv myenv”, myenv is the folder name containing your virtual python files.
-    Activate the virtual environment by source myenv/bin/activate
-    Install cmake version 3.20.0 or above (refer to https://vpsie.com/knowledge-base/how-to-install-cmake-on-ubuntu-20-04/)
-    Install the fairseq by “cd fairseq” following with “pip install –editable ./ “
-    Install Flashlight Sequence, “
+    1.First download the source code by “git clone https://github.com/windfat/cantoneseASR_jyutping.git” , then
+    
+    2.Setup the environment, “cd cantoneseASR_jyutping”, install python virtual environment, “python3 -m venv myenv”, myenv is the folder name containing your virtual python files.
+    
+    3. Activate the virtual environment by source myenv/bin/activate
+    
+    4. Install cmake version 3.20.0 or above (refer to https://vpsie.com/knowledge-base/how-to-install-cmake-on-ubuntu-20-04/)
+    
+    5. Install the fairseq by “cd fairseq” following with “pip install –editable ./ “
+    
+    6. Install Flashlight Sequence, “
         cd sequence,
         export CMAKE_POLICY_VERSION_MINIMUM=3.5
         export USE_CUDA=1
         pip install -e .
-    Download Mozilla’s common voice Cantonese dataset by “cd dataset” followed by visit https://commonvoice.mozilla.org/en/datasets, select the language Chinese (Hong Kong) and download the language dataset, eg., cv-corpus-21.0-2025-03-14-zh-HK.tar.gz
-    Extract the dataset under dataset folder.
-    Prepare the data format source files by “cd create_dataset_tools”, and “python ./prepare_cantonese_finetune_data.py”. This will create the train.ltr, train.tsv and valid.wrd files. The script prepare_cantonese_finetune_data will read the validated.tsv files from cv-corpus-21.0-2025-03-14/zh-HK folder, read the mp3 files path, change the label information from Chinese into Jyutping characters and convert the mp3 files into flac format. If the dataset is changed, user can modify the data_dir and dataset_dir variable inside prepare_cantonese_finetune_data.py and set to the right data path.
-    Prepare the test data source files, valid.tsv, valid.ltr and valid.wrd files by running “python ./prepare_cantonese_finetune_test_ data.py”.
-    Now under fairseq folder, “mkdir manifest_cantonese” and copy the valid.* and train.* under create_dataset_tools/ to manifest_cantonese.
-    Now the dataset and data source files for training and fine_tunning is ready. We can start to do the pre-traing by calling “python ./run_pretrain_cantonese.sh”, after the pretraining done, there is a checkpoint file under output folder. You need to use this checkpoint file to do the fine_tuinning by setting that file path into the model.w2v_path parameter inside run_finetune_cantonese.sh
-    Finally, we can do fine_tunning by “python ./ run_finetune_cantonese.sh”, this script will run the following
+        
+    7. Download Mozilla’s common voice Cantonese dataset by “cd dataset” followed by visit https://commonvoice.mozilla.org/en/datasets, select the language Chinese (Hong Kong) and download the language dataset, eg., cv-corpus-21.0-2025-03-14-zh-HK.tar.gz
+    
+    8. Extract the dataset under dataset folder.
+    
+    9. Prepare the data format source files by “cd create_dataset_tools”, and “python ./prepare_cantonese_finetune_data.py”. This will create the train.ltr, train.tsv and valid.wrd files. The script prepare_cantonese_finetune_data will read the validated.tsv files from cv-corpus-21.0-2025-03-14/zh-HK folder, read the mp3 files path, change the label information from Chinese into Jyutping characters and convert the mp3 files into flac format. If the dataset is changed, user can modify the data_dir and dataset_dir variable inside prepare_cantonese_finetune_data.py and set to the right data path.
+    
+    10. Prepare the test data source files, valid.tsv, valid.ltr and valid.wrd files by running “python ./prepare_cantonese_finetune_test_ data.py”.
+    
+    11. Now under fairseq folder, “mkdir manifest_cantonese” and copy the valid.* and train.* under create_dataset_tools/ to manifest_cantonese.
+        Now the dataset and data source files for training and fine_tunning is ready. We can start to do the pre-traing by calling “python ./run_pretrain_cantonese.sh”, after the pretraining done, there is a checkpoint file under output folder. You need to use this checkpoint file to do the fine_tuinning by setting that file path into the model.w2v_path parameter inside run_finetune_cantonese.sh
+    
+    12. Finally, we can do fine_tunning by “python ./ run_finetune_cantonese.sh”, this script will run the following
         export HYDRA_FULL_ERROR=1
         export PORT=1
         fairseq-hydra-train \ distributed_training.distributed_world_size=1 \ task.data=$PWD/manifest_cantonese \ model.w2v_path= <your checkpoint from above>/checkpoint_best.pt \ –config-dir $PWD/examples/wav2vec/config/finetuning \ –config-name base_100h
 
-After fine-tuning, there is a checkpoint file user can use to inference the speech data into Jyutping symbols.
+   13. After fine-tuning, there is a checkpoint file user can use to inference the speech data into Jyutping symbols.
 
+
+=====
 Test:
+======
 
 For inference: Install the flashlight.lib.text and use
 
@@ -42,10 +56,12 @@ print(transcribe(models, task, “common_voice_zh-HK_24020802.flac”))
 
 The final function transcribe(models, task, “common_voice_zh-HK_24020802.flac”) is to print the output of inference with the input speech file common_voice_zh-HK_24020802.flac inside the same folder. You can change your own speech file for inference here.
 
-Test:
 
-Find error
 
+
+=============
+Common error
+=============
 Traceback (most recent call last):
 File “inference_cantonese_test.py”, line 100, in
 print(transcribe(models, task, “common_voice_zh-HK_24020802.flac”))
@@ -53,15 +69,15 @@ File “inference_cantonese_test.py”, line 68, in transcribe
 generator = build_generator(DictConfig(generator_cfg))
 File “inference_cantonese_test.py”, line 16, in build_generator
 return W2lViterbiDecoder(args, task.target_dictionary)
-File “/media/home/mango/test_fairseq/fairseq/examples/speech_recognition/w2l_decoder.py”, line 99, in init
+File “<home>/fairseq/examples/speech_recognition/w2l_decoder.py”, line 99, in init
 super().init(args, tgt_dict)
-File “/media/home/mango/test_fairseq/fairseq/examples/speech_recognition/w2l_decoder.py”, line 56, in init
+File “<home>/fairseq/examples/speech_recognition/w2l_decoder.py”, line 56, in init
 self.criterion_type = CriterionType.CTC
 NameError: name ‘CriterionType’ is not defined
 
 Fix:
 
-modify the /media/home/mango/test_fairseq/fairseq/examples/speech_recognition/w2l_decoder.py, with adding
+modify the <home>/fairseq/examples/speech_recognition/w2l_decoder.py, with adding
 
 from flashlight.lib.text.decoder import CriterionType
 from flashlight.lib.text.decoder.kenlm import KenLM
