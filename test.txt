@@ -1,0 +1,21 @@
+Test:
+======
+
+Make sure you have installed the environment correctly by refereing to setup.txt
+
+For inference: Install the flashlight.lib.text and use
+
+“python inference_cantonese_test.py”, user needs to set the parameters inside this file correctly first,
+
+Inside the file, there is a setup of model and data path:
+
+models, task = load_model_and_task(
+model_path = “<path to your fine tune model>/checkpoint_best.pt”,
+data_dir = “<path to your manifest folder containing the dict file>” # Should contain dict.ltr.txt
+)
+
+print(transcribe(models, task, “common_voice_zh-HK_24020802.flac”))
+
+The final function transcribe(models, task, “common_voice_zh-HK_24020802.flac”) is to print the output of inference with the input speech file common_voice_zh-HK_24020802.flac inside the same folder. You can change your own speech file for inference here.
+
+
