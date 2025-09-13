@@ -24,6 +24,11 @@ from fairseq.utils import apply_to_sample
 from omegaconf import open_dict
 from fairseq.dataclass.utils import convert_namespace_to_omegaconf
 
+#david hack
+from flashlight.lib.text.decoder import CriterionType
+from flashlight.lib.text.decoder.kenlm import KenLM
+from flashlight.lib.text.decoder import Trie
+
 
 try:
     from flashlight.lib.text.dictionary import create_word_dict, load_words

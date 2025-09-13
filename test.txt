@@ -3,6 +3,10 @@ Test:
 
 Make sure you have installed the environment correctly by refereing to setup.txt
 
+Download the reference fine_tune model for cantonese jyutping from https://terabox.com/s/1tX6Ur74n99u0dyf1kq7UNg
+
+copy it to cantoneseASR_jyutping/fairseq/reference_checkpoint/cantonese/fine-tuned/
+
 For inference: Install the flashlight.lib.text and use
 
 “python inference_cantonese_test.py”, user needs to set the parameters inside this file correctly first,
