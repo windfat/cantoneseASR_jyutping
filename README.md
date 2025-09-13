@@ -1,4 +1,3 @@
 # cantoneseASR_jyutping
-Cantonese Automatic Speech Recognition to convert speech to Jyutping
-
+Cantonese Automatic Speech Recognition using Jyutping
 
