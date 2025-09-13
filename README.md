@@ -21,6 +21,12 @@ libcudnn version is 8.6.0
 
 To start training or test, we need to setup the python environment first. Please refer to setup.txt
 
+After setup, if you want to try the model without doing training, please jump to test section
 
+=============================================================
+Before training the model, we need to prepare training data:
+=============================================================
+
+To try training based on Librispeech dataset, please visit training_on_Librispeech.txt
 
 

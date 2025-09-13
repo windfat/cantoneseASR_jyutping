@@ -1,0 +1,22 @@
+=============================================================
+Before training the model, we need to prepare training data:
+=============================================================
+
+Now, fairseq and sequence shall be installed successfully. 
+
+Next is to prepare the training data. cd fairseq, then issue
+
+python examples/wav2vec/wav2vec_manifest.py /path/to/waves --dest /manifest/path --ext $ext --valid-percent $valid
+
+Wait, what does it mean to run this line? Basically, it will first read the folder /path/to/waves, where it should contains the corpus files, then it will read all corpus files with extension ext (eg., flac) and find its audio length. After that, it will generate the file location and length into train.tsv and valid.tsv. The two files, train.tsv and valid.tsv will be located under manifest folder. Let's use LibriSpeech as an example. cd cantoneseASR_jyutping, mkdir ./dataset , cd to dataset, then visit https://www.openslr.org/12 , then download the train-clean-100.tar.gz. Downloaded and extract the tar file under dataset, and the data is under ./dataset/LibriSpeech/train-clean-100/ . Now, under fairseq folder, mkdir manifest, and then issue the following command lines,
+
+export ext=flac
+export valid=0.01
+python examples/wav2vec/wav2vec_manifest.py ../dataset/LibriSpeech/train-clean-100 --dest ./manifest --ext $ext --valid-percent $valid
+
+you may save these lines into a sh file, prepare_librispeech_data.sh
+
+After that, it will generate the train.tsv and valid.tsv files. With these two files, we can train the wav2vec's base model from scratch. Yet, we need to complete the fine tuning which is the next step after the base model training completed. 
+
+
+
