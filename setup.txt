@@ -32,7 +32,7 @@ To start training or test, we need to setup the python environment first:
 	pip install -e .
 	
 8. Install other packages, 
-   pip install flashlight-text numpy pycantonese scipy protobuf tensorboardX
+   pip install flashlight-text numpy pycantonese scipy protobuf tensorboardX pydub
    	
 Here is the python packages installed by pip list
 Package                  Version                 Location                                               
