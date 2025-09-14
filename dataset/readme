@@ -1,0 +1,8 @@
+
+
+visit https://commonvoice.mozilla.org/en/datasets, select the language Chinese (Hong Kong) 
+and download the language dataset, cv-corpus-21.0-2025-03-14-zh-HK.tar.gz
+
+tar xvf cv-corpus-21.0-2025-03-14-zh-HK.tar.gz
+
+you should have the corpous data under cv-corpus-21.0-2025-03-14-zh-HK/
